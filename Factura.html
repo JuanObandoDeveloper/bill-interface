@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>FACTURA</title>
+		<link rel="stylesheet" type="text/css" href="dist/BScss/bootstrap.css">
+		<link rel="stylesheet" type="text/css" href="./estilos.css">
+		<script type="text/javascript" src="dist/BSjs/bootstrap.bundle.js"></script>
+		<script src="https://kit.fontawesome.com/09bcf3bc2a.js" crossorigin="anonymous"></script>
+	</head>
+	<body>
+
+		<div class="container-fluid">
+			<div id="contentRegistro" class="row m-0 mt-4 justify-content-center">
+				<div class="col-4 border p-4 mt-4">
+					<h3 class="text-center">Información Empresa </h3>
+
+					<form id="formularioRegistro" action="#" method="POST" accept-charset="utf-8">
+						<label class="d-block mt-3" for="campo_nombre">Nombre: </label>
+						<input class="form-control" id="campo_nombre" type="text" name="campo_nombre" required value="">
+
+						<label class="d-block mt-3" for="campo_nit">Nit: </label>
+						<input class="form-control" id="campo_nit" type="number" name="campo_nit" required value="">
+
+						<label class="d-block mt-3" for="campo_propietario">Propietario: </label>
+						<input class="form-control" id="campo_propietario" type="text" name="campo_propietario" required value="">
+
+						<label class="d-block mt-3" for="campo_direccion">Direccion: </label>
+						<input class="form-control" id="campo_direccion" type="text" name="campo_direccion" required value="">
+
+						<label class="d-block mt-3" for="campo_telefono">Telefono: </label>
+						<input class="form-control" id="campo_telefono" type="number" name="campo_telefono" required value="">
+
+						<div class="row justify-content-center">
+							<button type="submit" class="col-6 btn btn-primary mt-3" onclick="obtenerDatos();">CONTINUAR</button>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div id="contentFactura" style="display:none;">
+				<div class="row m-0 pt-4 justify-content-center">
+					<div class="col-5 border p-3">
+						<div class="row m-0">
+							<div class="col-7 p-0">
+								<h1 class="text-center text-dark"><u id="bussinessName"></u></h1>
+								<h6 class="text-center m-0" id="ownerName"></h6>
+								<p class="text-center m-0" id="nitInfo"></p>
+							</div>
+							<div class="col-5 p-0">
+								<p class="text-small text-center">
+									Distribuimos todo tipo de productos <br>
+									Brindamos un sin fin de servicios <br>
+									<b>Ventas al por mayor y al detal.</b>
+								</p>
+								<p class="text-small text-center mb-0">
+									<b id="phoneAndAddress">
+
+									</b>
+								</p>
+							</div>
+						</div>
+						<div class="row m-0 mt-2 justify-content-center">
+							<div class="col-4 m-0 p-0">
+								<table class="table table-bordered m-0">
+									<thead>
+										<tr class="text-center">
+											<th class="p-1">DIA</th>
+											<th class="p-1">MES</th>
+											<th class="p-1">AÑO</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td class="text-center p-1" id="dayValue"></td>
+											<td class="text-center p-1" id="monthValue"></td>
+											<td class="text-center p-1" id="yearValue"></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							<div class="col ms-3 p-0">
+								<div class="row m-0">
+									<div class="col-5 p-0 pe-2">
+										<h4 class="text-end m-0">FACTURA VENTA</h4>
+									</div>
+									<div class="col m-0 ms-3 border p-2">
+										<h3 class="text-danger text-center m-0" id="billNumber"></h3>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row m-0 mt-2">
+							<div class="col-7 p-0">
+								<label class="label-cliente" for="campo_cliente">Señor(a): </label>
+								<input class="input-cliente" id="campo_cliente" type="text" readonly>
+							</div>
+							<div class="col-5 p-0">
+								<label  class="label-nit-cliente" for="campo_cliente_cc">NIT/CC.</label>
+								<input  class="input-nit-cliente" id="campo_cliente_cc" type="number" style="outline: none;">
+							</div>
+
+							<div class="col-7 p-0">
+								<label class="label-cliente direccion" for="campo_cliente_direccion">Dirección: </label>
+								<input class="input-cliente" id="campo_cliente_direccion" type="text" readonly>
+							</div>
+							<div class="col-5 p-0">
+								<label  class="label-nit-cliente" for="campo_cliente_phone">TEL/CEL.</label>
+								<input  class="input-nit-cliente" id="campo_cliente_phone" type="number" readonly>
+							</div>
+						</div>
+						<div class="m-0 mt-3 p-0">
+							<table class="m-0 table table-bordered table-sm">
+								<thead>
+									<tr>
+										<th class="text-center p-1">CODIGO</th>
+										<th class="text-center p-1">CANT.</th>
+										<th class="text-center p-1">PRECIO</th>
+										<th class="text-center p-1">DESCRIPCION</th>
+										<th class="text-center p-1">TOTAL</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td class="p-0 text-center"><input type="number" class="code" onkeyup="obtenerProducto(this);"></td>
+										<td class="p-0 text-center"><input type="number" class="amount" onkeyup="calcTotal(this);"></td>
+										<td class="p-0 text-center"></td>
+										<td class="p-0 text-center"></td>
+										<td class="p-0 text-center total">0</td>
+									</tr>
+									<tr>
+										<td class="p-0 text-center"><input type="number" class="code" onkeyup="obtenerProducto(this);"></td>
+										<td class="p-0 text-center"><input type="number" class="amount" onkeyup="calcTotal(this);"></td>
+										<td class="p-0 text-center"></td>
+										<td class="p-0 text-center"></td>
+										<td class="p-0 text-center total">0</td>
+									</tr>
+									<tr>
+										<td class="p-0 text-center"><input type="number" class="code" onkeyup="obtenerProducto(this);"></td>
+										<td class="p-0 text-center"><input type="number" class="amount" onkeyup="calcTotal(this);"></td>
+										<td class="p-0 text-center"></td>
+										<td class="p-0 text-center"></td>
+										<td class="p-0 text-center total">0</td>
+									</tr>
+									<tr>
+										<td class="p-0 text-center"><input type="number" class="code" onkeyup="obtenerProducto(this);"></td>
+										<td class="p-0 text-center"><input type="number" class="amount" onkeyup="calcTotal(this);"></td>
+										<td class="p-0 text-center"></td>
+										<td class="p-0 text-center"></td>
+										<td class="p-0 text-center total">0</td>
+									</tr>
+									<tr>
+										<td class="p-0 text-center"><input type="number" class="code" onkeyup="obtenerProducto(this);"></td>
+										<td class="p-0 text-center"><input type="number" class="amount" onkeyup="calcTotal(this);"></td>
+										<td class="p-0 text-center"></td>
+										<td class="p-0 text-center"></td>
+										<td class="p-0 text-center total">0</td>
+									</tr>
+									<tr>
+										<td class="p-0 text-center"><input type="number" class="code" onkeyup="obtenerProducto(this);"></td>
+										<td class="p-0 text-center"><input type="number" class="amount" onkeyup="calcTotal(this);"></td>
+										<td class="p-0 text-center"></td>
+										<td class="p-0 text-center"></td>
+										<td class="p-0 text-center total">0</td>
+									</tr>
+									<tr>
+										<td class="p-0 text-center"><input type="number" class="code" onkeyup="obtenerProducto(this);"></td>
+										<td class="p-0 text-center"><input type="number" class="amount" onkeyup="calcTotal(this);"></td>
+										<td class="p-0 text-center"></td>
+										<td class="p-0 text-center"></td>
+										<td class="p-0 text-center total">0</td>
+									</tr>
+								</tbody>
+							</table>
+							<div class="row m-0 mt-3 justify-content-end">
+								<div class="col-5 p-0">
+									<div class="row m-0">
+										<h5 class="col-4 p-0 pe-2 pt-2 text-end">TOTAL:</h5>
+										<div class="col-8 p-0">
+											<input class="form-control" type="text" name="" readonly id="totalBill">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col ms-3 p-0">
+						
+						<ul class="nav nav-tabs" id="myTab" role="tablist">
+							<li class="nav-item" role="presentation">
+								<button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Clientes</button>
+							</li>
+							<li class="nav-item" role="presentation">
+								<button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Empleados</button>
+							</li>
+							<li class="nav-item" role="presentation">
+								<button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Productos</button>
+							</li>
+						</ul>
+						<div class="tab-content borderCompleto h-95" id="myTabContent">
+							<div class="tab-pane fade show active p-3" id="home" role="tabpanel" aria-labelledby="home-tab">
+
+								<table class="table table-bordered table-sm">
+									<thead class="bg-primary text-light">
+										<tr class="text-center">
+											<th class="py-2">N°</th>
+											<th class="py-2">DOCUMENTO</th>
+											<th class="py-2">NOMBRES</th>
+											<th class="py-2">DIRECCION</th>
+											<th class="py-2">TELEFONO</th>
+											<th class="py-2">OP.</th>
+										</tr>
+									</thead>
+									<tbody id="contenidoClientes" class="text-center" >
+										<tr>
+											<td>1</td>
+											<td class="documentoCliente">108800</td>
+											<td>OSCAR ANDRES LOAIZA PABON</td>
+											<td>CALLE 20</td>
+											<td>3443329</td>
+											<td>
+												<button class="btn btn-info py-0 px-2" onclick="editarDatos(this);" ><b><i class="fas fa-edit"></i></b></button>
+												<button class="btn btn-danger py-0 px-2" onclick="eliminarFila(this);" > <b>X</b> </button>
+											</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td class="documentoCliente">108801</td>
+											<td>DANIEL PEREZ</td>
+											<td>CALLE 22</td>
+											<td>3123122</td>
+											<td>
+												<button class="btn btn-info py-0 px-2" onclick="editarDatos(this);" ><b><i class="fas fa-edit"></i></b></button>
+												<button class="btn btn-danger py-0 px-2" onclick="eliminarFila(this);" > <b>X</b> </button>
+											</td>
+										</tr>
+										<tr>
+											<td>3</td>
+											<td class="documentoCliente">108802</td>
+											<td>MARIA LOPEZ</td>
+											<td>CALLE 32</td>
+											<td>323132123</td>
+											<td>
+												<button class="btn btn-info py-0 px-2" onclick="editarDatos(this);" ><b><i class="fas fa-edit"></i></b></button>
+												<button class="btn btn-danger py-0 px-2" onclick="eliminarFila(this);" > <b>X</b> </button>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+								<div class="row justify-content-end m-0">
+									<button class="btn btn-primary col-2" onclick="addCliente();"><b>AGREGAR</b></button>
+								</div>
+
+							</div>
+							<div class="tab-pane fade p-3" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+								
+								<table class="table table-bordered table-sm">
+									<thead class="bg-success text-light">
+										<tr class="text-center">
+											<th class="py-2">N°</th>
+											<th class="py-2">DOCUMENTO</th>
+											<th class="py-2">NOMBRES</th>
+											<th class="py-2">DIRECCION</th>
+											<th class="py-2">TELEFONO</th>
+											<th class="py-2">OP.</th>
+										</tr>
+									</thead>
+									<tbody id="contenidoEmpleados" class="text-center" >
+										<tr>
+											<td>1</td>
+											<td class="documentoEmpleado">108803</td>
+											<td>ANA MARINA PEREZ CORREA</td>
+											<td>CALLE 25</td>
+											<td>3123339</td>
+											<td>
+												<button class="btn btn-info py-0 px-2" onclick="editarDatos(this);" ><b><i class="fas fa-edit"></i></b></button>
+												<button class="btn btn-danger py-0 px-2" onclick="eliminarFila(this);" > <b>X</b> </button>
+											</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td class="documentoEmpleado">108804</td>
+											<td>JUAN CAMILO MOLINA GUARIN</td>
+											<td>CALLE 26</td>
+											<td>3282932</td>
+											<td>
+												<button class="btn btn-info py-0 px-2" onclick="editarDatos(this);" ><b><i class="fas fa-edit"></i></b></button>
+												<button class="btn btn-danger py-0 px-2" onclick="eliminarFila(this);" > <b>X</b> </button>
+											</td>
+										</tr>
+										<tr>
+											<td>3</td>
+											<td class="documentoEmpleado">108805</td>
+											<td>DANIEL ANDRES CARMONA LOPEZ</td>
+											<td>CALLE 34</td>
+											<td>3239238</td>
+											<td>
+												<button class="btn btn-info py-0 px-2" onclick="editarDatos(this);" ><b><i class="fas fa-edit"></i></b></button>
+												<button class="btn btn-danger py-0 px-2" onclick="eliminarFila(this);" > <b>X</b> </button>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+								<div class="row justify-content-end m-0">
+									<button class="btn btn-success col-2" onclick="addEmpleado();"><b>AGREGAR</b></button>
+								</div>
+
+							</div>
+							<div class="tab-pane fade p-3" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+								
+								<table class="table table-bordered table-sm">
+									<thead class="bg-secondary text-light">
+										<tr class="text-center">
+											<th class="py-2">N°</th>
+											<th class="py-2">CODIGO</th>
+											<th class="py-2">DESCRIPCION</th>
+											<th class="py-2">PRECIO</th>
+											<th class="py-2">CANTIDAD</th>
+											<th class="py-2">OP.</th>
+										</tr>
+									</thead>
+									<tbody id="contenidoProductos" class="text-center" >
+										<tr>
+											<td>1</td>
+											<td class="productCode">101010</td>
+											<td>CUADERNO 50h</td>
+											<td>2500</td>
+											<td>1850</td>
+											<td>
+												<button class="btn btn-info py-0 px-2" onclick="editarProducto(this);" ><b><i class="fas fa-edit"></i></b></button>
+												<button class="btn btn-danger py-0 px-2" onclick="eliminarFila(this);" > <b>X</b> </button>
+											</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td class="productCode">101011</td>
+											<td>LAPIZ MIRADO 2</td>
+											<td>1000</td>
+											<td>740</td>
+											<td>
+												<button class="btn btn-info py-0 px-2" onclick="editarProducto(this);" ><b><i class="fas fa-edit"></i></b></button>
+												<button class="btn btn-danger py-0 px-2" onclick="eliminarFila(this);" > <b>X</b> </button>
+											</td>
+										</tr>
+										<tr>
+											<td>3</td>
+											<td class="productCode">101012</td>
+											<td>TAJA LAPIZ</td>
+											<td>1500</td>
+											<td>211</td>
+											<td>
+												<button class="btn btn-info py-0 px-2" onclick="editarProducto(this);" ><b><i class="fas fa-edit"></i></b></button>
+												<button class="btn btn-danger py-0 px-2" onclick="eliminarFila(this);" > <b>X</b> </button>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+								<div class="row justify-content-end m-0">
+									<button class="btn btn-secondary col-2" onclick="addProducto();"><b>AGREGAR</b></button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="editorModalPersonas" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="staticBackdropLabel">Editar Datos</h5>
+					</div>
+					<div class="modal-body">
+						<form id="editorFormPersonas" action="#" method="POST" accept-charset="utf-8">
+							<label class="d-block mt-3" for="editDocument">Documento: </label>
+							<input class="form-control" id="editDocument" type="number" name="editDocument" required readonly>
+	
+							<label class="d-block mt-3" for="editName">Nombre: </label>
+							<input class="form-control" id="editName" type="text" name="editName" required>
+	
+							<label class="d-block mt-3" for="editAddress">Direccion: </label>
+							<input class="form-control" id="editAddress" type="text" name="editAddress" required>
+	
+							<label class="d-block mt-3" for="editPhone">Telefono: </label>
+							<input class="form-control" id="editPhone" type="number" name="editPhone" required>
+
+							<div class="row justify-content-center">
+								<button type="button" class="col-5 mt-3 me-3 btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+								<button type="submit" class="col-5 mt-3 btn btn-success">Guardar</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="editorModalProducto" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="staticBackdropLabel">Editar Datos</h5>
+					</div>
+					<div class="modal-body">
+						<form id="editorFormProductos" action="#" method="POST" accept-charset="utf-8">
+							<label class="d-block mt-3" for="editCode">Codigo: </label>
+							<input class="form-control" id="editCode" type="number" name="editCode" required readonly>
+	
+							<label class="d-block mt-3" for="editDescription">Descripcion: </label>
+							<input class="form-control" id="editDescription" type="text" name="editDescription" required>
+	
+							<label class="d-block mt-3" for="editPrice">Precio: </label>
+							<input class="form-control" id="editPrice" type="number" name="editPrice" required>
+	
+							<label class="d-block mt-3" for="editCantidad">Cantidad: </label>
+							<input class="form-control" id="editCantidad" type="number" name="editCantidad" required>
+
+							<div class="row justify-content-center">
+								<button type="button" class="col-5 mt-3 me-3 btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+								<button type="submit" class="col-5 mt-3 btn btn-success">Guardar</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="addClienteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="staticBackdropLabel">Ingresar Datos del Cliente</h5>
+					</div>
+					<div class="modal-body">
+						<form id="formAddCliente" action="#" method="POST" accept-charset="utf-8">
+							<label class="d-block mt-3" for="addDocumentCliente">Documento: </label>
+							<input class="form-control" id="addDocumentCliente" type="number" name="addDocumentCliente" required>
+	
+							<label class="d-block mt-3" for="addNameCliente">Nombres y apellidos: </label>
+							<input class="form-control" id="addNameCliente" type="text" name="addNameCliente" required>
+	
+							<label class="d-block mt-3" for="addAddressCliente">Direccion: </label>
+							<input class="form-control" id="addAddressCliente" type="text" name="addAddressCliente" required>
+	
+							<label class="d-block mt-3" for="addPhoneCliente">Telefono: </label>
+							<input class="form-control" id="addPhoneCliente" type="number" name="addPhoneCliente" required>
+
+							<div class="row justify-content-center">
+								<button type="button" class="col-5 mt-3 me-3 btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+								<button type="submit" class="col-5 mt-3 btn btn-success">Añadir</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="addEmpleadoModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="staticBackdropLabel">Ingresar Datos del Empleado</h5>
+					</div>
+					<div class="modal-body">
+						<form id="formAddEmpleado" action="#" method="POST" accept-charset="utf-8">
+							<label class="d-block mt-3" for="addDocumentEmpleado">Documento: </label>
+							<input class="form-control" id="addDocumentEmpleado" type="number" name="addDocumentEmpleado" required>
+	
+							<label class="d-block mt-3" for="addNameEmpleado">Nombres y apellidos: </label>
+							<input class="form-control" id="addNameEmpleado" type="text" name="addNameEmpleado" required>
+	
+							<label class="d-block mt-3" for="addAddressEmpleado">Direccion: </label>
+							<input class="form-control" id="addAddressEmpleado" type="text" name="addAddressEmpleado" required>
+	
+							<label class="d-block mt-3" for="addPhoneEmpleado">Telefono: </label>
+							<input class="form-control" id="addPhoneEmpleado" type="number" name="addPhoneEmpleado" required>
+
+							<div class="row justify-content-center">
+								<button type="button" class="col-5 mt-3 me-3 btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+								<button type="submit" class="col-5 mt-3 btn btn-success">Añadir</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="addProductoModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="staticBackdropLabel">Ingrese Datos del Producto</h5>
+					</div>
+					<div class="modal-body">
+						<form id="formAddProducto" action="#" method="POST" accept-charset="utf-8">
+							<label class="d-block mt-3" for="addCode">Codigo: </label>
+							<input class="form-control" id="addCode" type="number" name="addCode" required>
+	
+							<label class="d-block mt-3" for="addDescription">Descripcion: </label>
+							<input class="form-control" id="addDescription" type="text" name="addDescription" required>
+	
+							<label class="d-block mt-3" for="addPrice">Precio: </label>
+							<input class="form-control" id="addPrice" type="number" name="addPrice" required>
+	
+							<label class="d-block mt-3" for="addCantidad">Cantidad: </label>
+							<input class="form-control" id="addCantidad" type="number" name="addCantidad" required>
+
+							<div class="row justify-content-center">
+								<button type="button" class="col-5 mt-3 me-3 btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+								<button type="submit" class="col-5 mt-3 btn btn-success">Añadir</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript" src="./script_factura.js"></script>
+	</body>
+</html>

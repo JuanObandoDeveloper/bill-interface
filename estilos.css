@@ -1,0 +1,67 @@
+input[readonly]{
+	outline: none;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+.text-small{
+	font-size: 0.73rem;
+}
+
+.label-cliente{
+	width: 20%;
+	vertical-align: bottom;
+}
+
+.input-cliente{
+	width: 70%;
+	border:none;
+	border-bottom: 1px solid gray;
+}
+
+.label-nit-cliente{
+	width: 25%;
+	vertical-align: bottom;
+}
+
+.input-nit-cliente{
+	width: 72%;
+	border:none;
+	border-bottom: 1px solid gray;
+}
+
+.label-cliente.direccion{
+	width: 22% !important;
+	vertical-align: bottom;
+}
+.input-cliente#campo_cliente_direccion{
+	width: 68%;
+	border:none;
+	border-bottom: 1px solid gray;
+}
+.borderCompleto{
+	border-left: 1px solid #dee2e6;
+	border-right: 1px solid #dee2e6;
+	border-bottom: 1px solid #dee2e6;
+}
+
+.h-95{
+	height: 93%;
+}
+
+.code{
+	width: 90%;
+	outline: none;
+	text-align: right;
+	border: none;
+}
+.amount{
+	width: 90%;
+	outline: none;
+	text-align: right;
+	border: none;	
+}
